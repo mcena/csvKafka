@@ -1,5 +1,8 @@
 package com.mcena.consumer;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mcena.Object.Person;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -9,7 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 public class Consumer {
@@ -17,13 +22,15 @@ public class Consumer {
 
     private final String bootstrapServer;
     private final String consumerId;
+    private ObjectMapper objectMapper;
 
     public Consumer(String bootstrapServer, String consumerId) {
         this.bootstrapServer = bootstrapServer;
         this.consumerId = consumerId;
+        this.objectMapper = new ObjectMapper();
     }
 
-    public void initConsumer() {
+    public void initConsumer() throws JsonProcessingException {
         // properties
         Properties properties = new Properties();
         properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
@@ -43,6 +50,10 @@ public class Consumer {
             for(ConsumerRecord record : consumerRecords) {
                 logger.info("Key: " + record.key() + ", Value: " + record.value() + ", Topic: " + record.topic()
                         + ", Partition: " + record.partition() + ", Offset: " + record.offset());
+
+                Person person = objectMapper.readValue(record.value().toString(), Person.class);
+                logger.info("Consumed JSON to Java Object: " + person.toString());
+
             }
 
         }
