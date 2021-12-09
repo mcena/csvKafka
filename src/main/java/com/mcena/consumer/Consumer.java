@@ -57,8 +57,8 @@ public class Consumer {
                 Person person = objectMapper.readValue(record.value().toString(), Person.class);
                 logger.info("Consumed JSON to Java Object: " + person.toString());
 
-                //TODO: implement SQL connection here to save values
-
+                // init SQL
+                idbConnection.initQuery(person);
             }
 
         }

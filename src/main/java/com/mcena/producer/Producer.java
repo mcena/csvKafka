@@ -25,7 +25,7 @@ public class Producer {
         this.topicName = topicName;
         this.properties = new Properties();
     }
-    public void initProducer(List<Person> personList) {
+    public <T> void initProducer(List<T> personList) {
         //Create properties for producer
         properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
@@ -36,9 +36,9 @@ public class Producer {
 
         Callback callBack = new ProducerCallback();
 
-        for(Person person : personList) {
+        for(T person : personList) {
             //Create producer record
-            ProducerRecord<String,Person> producerRecord = new ProducerRecord<String, Person>(topicName,"person-info",person);
+            ProducerRecord<String,Person> producerRecord = new ProducerRecord<String, Person>(topicName,"person-info",(Person)person);
 
             //send record - async
             logger.info("sending data to kafka server..");

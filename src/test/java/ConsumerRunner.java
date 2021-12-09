@@ -14,7 +14,7 @@ public class ConsumerRunner {
         try {
             consumer.initConsumer();
         } catch (Exception e) {
-            logger.error("Exception occured when executing method initConsumer(): " + e.getMessage());
+            logger.error("Exception occurred when executing method initConsumer(): " + e.getMessage());
         }
 
     }

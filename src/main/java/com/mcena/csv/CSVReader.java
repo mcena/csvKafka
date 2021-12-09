@@ -27,25 +27,27 @@ public class CSVReader {
         this.personList = new ArrayList<Person>();
     }
 
-    public void readCSVFile() throws IOException {
+    public void readCSVFile() {
         logger.info("initializing CSV reader..");
+        try {
+            Reader reader = new FileReader(csvFileLocation);
+            Iterable<CSVRecord> records = CSVFormat.DEFAULT
+                    .withHeader()
+                    .parse(reader);
+            for(CSVRecord record : records) {
+                // get CSV record per row
+                String firstName = record.get(CSVHeaders.firstName);
+                String lastName = record.get(CSVHeaders.lastName);
+                String email = record.get(CSVHeaders.email);
+                String phoneNumber = record.get(CSVHeaders.phone);
 
-        Reader reader = new FileReader(csvFileLocation);
-
-        Iterable<CSVRecord> records = CSVFormat.DEFAULT
-                .withHeader()
-                .parse(reader);
-        for(CSVRecord record : records) {
-            // get CSV record per row
-            String firstName = record.get(CSVHeaders.firstName);
-            String lastName = record.get(CSVHeaders.lastName);
-            String email = record.get(CSVHeaders.email);
-            String phoneNumber = record.get(CSVHeaders.phone);
-
-            // convert to object
-            Person person = new Person(firstName, lastName, email, phoneNumber);
-            logger.info("CSV Record fetched: " + person.toString());
-            personList.add(person);
+                // convert to object
+                Person person = new Person(firstName, lastName, email, phoneNumber);
+                logger.info("CSV Record fetched: " + person.toString());
+                personList.add(person);
+            }
+        } catch (Exception e) {
+            logger.error("Exception occurred while reading CSV: " + e.getMessage());
         }
         // pass to Producer class to perform kafka operation
         producer.initProducer(personList);
