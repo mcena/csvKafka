@@ -1,9 +1,12 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
 
+
 <beans xmlns = "http://www.springframework.org/schema/beans"
        xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation = "http://www.springframework.org/schema/beans
    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <import resource="Database.xml"/>
 
     <bean id = "Producer" class = "com.mcena.producer.Producer" scope="prototype">
         <constructor-arg index="0" value="localhost:9092"/>
@@ -18,6 +21,10 @@
     <bean id = "CSVReader" class = "com.mcena.csv.CSVReader" scope="prototype">
         <constructor-arg index="0" value="D:\\Documents\\Test_files\\sample.csv"/>
         <constructor-arg index="1" ref="Producer"/>
+    </bean>
+
+    <bean id = "databaseConnection" class="com.mcena.datasource.DBConnection">
+        <constructor-arg index="0" ref="MySQLDataSource"/>
     </bean>
 
 </beans>

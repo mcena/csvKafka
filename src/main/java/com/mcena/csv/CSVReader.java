@@ -26,9 +26,6 @@ public class CSVReader {
         this.producer = producer;
         this.personList = new ArrayList<Person>();
     }
-    public void print() {
-        logger.info("i can print");
-    }
 
     public void readCSVFile() throws IOException {
         logger.info("initializing CSV reader..");
