@@ -7,9 +7,8 @@ import org.slf4j.LoggerFactory;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
 
-public class DBConnection {
+public class DBConnection implements IDBConnection{
     private final Logger logger = LoggerFactory.getLogger(DBConnection.class);
     private final DataSource dataSource;
 
@@ -19,9 +18,10 @@ public class DBConnection {
     public DBConnection(DataSource dataSource) {
         this.dataSource = dataSource;
     }
-
-    public void insertData(Person person) {
-        logger.info("Initializing insert SQL query");
+    @Override
+    public <T> void initQuery(T genericObject) {
+        logger.info("Initializing INSERT SQL query");
+        Person person = (Person) genericObject;
 
         // execute insert query
         try (Connection connection = dataSource.getConnection();

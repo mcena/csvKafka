@@ -16,6 +16,7 @@
     <bean id = "Consumer" class = "com.mcena.consumer.Consumer" scope="prototype">
         <constructor-arg index="0" value="localhost:9092"/>
         <constructor-arg index="1" value="java-group-consumer"/>
+        <constructor-arg index="2" ref="databaseConnection"/>
     </bean>
 
     <bean id = "CSVReader" class = "com.mcena.csv.CSVReader" scope="prototype">

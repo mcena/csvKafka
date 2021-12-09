@@ -3,6 +3,7 @@ package com.mcena.consumer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mcena.Object.Person;
+import com.mcena.datasource.IDBConnection;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -22,11 +23,13 @@ public class Consumer {
 
     private final String bootstrapServer;
     private final String consumerId;
+    private final IDBConnection idbConnection;
     private ObjectMapper objectMapper;
 
-    public Consumer(String bootstrapServer, String consumerId) {
+    public Consumer(String bootstrapServer, String consumerId, IDBConnection idbConnection) {
         this.bootstrapServer = bootstrapServer;
         this.consumerId = consumerId;
+        this.idbConnection = idbConnection;
         this.objectMapper = new ObjectMapper();
     }
 
@@ -53,6 +56,8 @@ public class Consumer {
 
                 Person person = objectMapper.readValue(record.value().toString(), Person.class);
                 logger.info("Consumed JSON to Java Object: " + person.toString());
+
+                //TODO: implement SQL connection here to save values
 
             }
 
