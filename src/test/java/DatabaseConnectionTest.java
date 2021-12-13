@@ -8,6 +8,7 @@ public class DatabaseConnectionTest {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("Beans.xml");
         DBConnection dbConnection = (DBConnection) applicationContext.getBean("databaseConnection");
 
+        // test data
         Person person = new Person("sampleName", "sampleLastName","sampleEmail@yahoo.com", "938493");
 
         dbConnection.initQuery(person);

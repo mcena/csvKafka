@@ -9,18 +9,18 @@
     <import resource="Database.xml"/>
 
     <bean id = "Producer" class = "com.mcena.producer.Producer" scope="prototype">
-        <constructor-arg index="0" value="localhost:9092"/>
-        <constructor-arg index="1" value="sample-topic"/>
+        <constructor-arg index="0" value="localhost:9092"/> <!-- kafka producer localhost server -->
+        <constructor-arg index="1" value=""/> <!-- topic name -->
     </bean>
 
     <bean id = "Consumer" class = "com.mcena.consumer.Consumer" scope="prototype">
-        <constructor-arg index="0" value="localhost:9092"/>
-        <constructor-arg index="1" value="java-group-consumer"/>
+        <constructor-arg index="0" value="localhost:9092"/> <!-- kafka consumer localhost server -->
+        <constructor-arg index="1" value=""/> <!-- kafka consumer group -->
         <constructor-arg index="2" ref="databaseConnection"/>
     </bean>
 
     <bean id = "CSVReader" class = "com.mcena.csv.CSVReader" scope="prototype">
-        <constructor-arg index="0" value="D:\\Documents\\Test_files\\sample.csv"/>
+        <constructor-arg index="0" value=""/> <!-- CSV File location -->
         <constructor-arg index="1" ref="Producer"/>
     </bean>
 
