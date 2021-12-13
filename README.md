@@ -5,3 +5,11 @@ Simple backend application wherein it reads CSV file sends to a kafka broker the
   - Generated JSON will be sent into a Kafka topic (Producer implementation).
   - Kafka Consumer implemented for JSON messages and converts it back into a Java Object.
   - Saves into the database (MySQL configuration).
+
+# Beans.xml
+
+![](docs/beans_xml.PNG)
+
+# Database.xml
+
+![](docs/database_xml.PNG)
